@@ -1,0 +1,68 @@
+// GHCJS RTS externs for closure compiler ADVANCED_OPTIMIZATIONS
+
+/** @type {*} */
+Object.PUT;
+/** @type {*} */
+Object.GET;
+/** @type {*} */
+Object.POST;
+/** @type {*} */
+Object.PATCH;
+/** @type {*} */
+Object.DELETE;
+
+/** @type {*} */
+Object.xrqUrl;
+/** @type {*} */
+Object.xrqMethod;
+/** @type {*} */
+Object.xrqBody;
+/** @type {*} */
+Object.xrqHeaders;
+/** @type {*} */
+Object.xrqWithCredentials;
+/** @type {*} */
+Object.xrqTimeout;
+/** @type {*} */
+Object.xrqResponseType;
+
+/** @type {*} */
+Object.XRQText;
+/** @type {*} */
+Object.XRQByteString;
+/** @type {*} */
+Object.XRQFile;
+
+/** @type {*} */
+Object.xrsUrl;
+/** @type {*} */
+Object.xrsStatus;
+/** @type {*} */
+Object.xrsStatusText;
+/** @type {*} */
+Object.xrsHeaders;
+/** @type {*} */
+Object.xrsBody;
+
+/** @type {*} */
+Object.XRTText;
+/** @type {*} */
+Object.XRTArrayBuffer;
+
+/** @type {*} */
+Object.XRSText;
+/** @type {*} */
+Object.XRSByteString;
+/** @type {*} */
+Object.XRSEmpty;
+
+/** @type {*} */
+Object.BadUrl;
+/** @type {*} */
+Object.BadPayload;
+/** @type {*} */
+Object.BadStatus;
+/** @type {*} */
+Object.Timeout;
+/** @type {*} */
+Object.NetworkError;

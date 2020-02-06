@@ -36,6 +36,7 @@ type ResponseType =
   | { XRTText: true } | { XRTArrayBuffer: true }
 
 type ResponseBody =
+  | { XRSEmpty: true }
   | { XRSText: string }
   | { XRSByteString: any }
 
@@ -54,7 +55,12 @@ var Control_Monad_Xhr_Internal = function() {
     onFailure /*: (err: HttpError) => void */,
   ) {
     var xhr = new XMLHttpRequest();
-    var method = firstKey(req.xrqMethod);
+    var method;
+    if ('GET' in req.xrqMethod) { method = 'GET'; }
+    else if ('POST' in req.xrqMethod) { method = 'POST'; }
+    else if ('PATCH' in req.xrqMethod) { method = 'PATCH'; }
+    else if ('PUT' in req.xrqMethod) { method = 'PUT'; }
+    else if ('DELETE' in req.xrqMethod) { method = 'DELETE'; }
     xhr.addEventListener('error', handleError);
     xhr.addEventListener('timeout', onFailure.bind(void 0, { Timeout: true }));
     xhr.addEventListener('load', handleLoad);
@@ -76,7 +82,7 @@ var Control_Monad_Xhr_Internal = function() {
       body = req.xrqBody.XRQText;
     } else if ('XRQByteString' in req.xrqBody) {
       // $FlowFixMe
-      body = req.xrqBody.XRQByteString.buf;
+      body = req.xrqBody.XRQByteString;
     } else if ('XRQFile' in req.xrqBody) {
       // $FlowFixMe
       body = req.xrqBody.XRQFile;
@@ -112,14 +118,5 @@ var Control_Monad_Xhr_Internal = function() {
       onFailure({ NetworkError: e.message || e.constructor.name });
     }
   }
-
-  function firstKey(obj /*: Object */) /*: string */ {
-    for (var k in obj) {
-      if (!obj.hasOwnProperty(k)) continue;
-      return k;
-    }
-    throw new Error('firstKey: given object doesn\'t have any own properties');
-  }
-
   return { sendXhr: sendXhr };
 } ();

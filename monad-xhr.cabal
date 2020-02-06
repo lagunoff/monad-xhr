@@ -3,7 +3,7 @@ cabal-version: 1.12
 name:           monad-xhr
 version:        0.1.0.0
 category:       Web
-homepage:       https://github.com/lagunoff/ghcjs-app
+homepage:       https://github.com/lagunoff/monad-xhr
 author:         Vladislav Lagunov
 maintainer:     vlad.lagunoff@gmail.com
 copyright:      2019 Vladislav Lagunov
@@ -12,68 +12,68 @@ build-type:     Simple
 
 library
   exposed-modules:
-      Control.Monad.Xhr
-      Control.Monad.Xhr.Base
-      Control.Monad.Xhr.Types
+    Control.Monad.Xhr
+    Control.Monad.Xhr.Base
+    Control.Monad.Xhr.Types
   other-modules:
-      Paths_monad_xhr
+    Paths_monad_xhr
   hs-source-dirs:
-      src
+    src
   ghc-options: -Wall -Wno-missing-signatures -Wno-name-shadowing
   build-depends:
-      aeson
-    , attoparsec
-    , base >=4.7 && <5
-    , bytestring
-    , data-default
-    , errors
-    , exceptions
-    , jsaddle
-    , mtl
-    , text
-    , transformers
+    aeson,
+    attoparsec,
+    base >=4.7 && <5,
+    bytestring,
+    data-default,
+    errors,
+    exceptions,
+    jsaddle,
+    mtl,
+    text,
+    transformers
   if impl(ghcjs)
     ghc-options: -dedupe
     other-modules:
-        Control.Monad.Xhr.Internal
+      Control.Monad.Xhr.Internal
     hs-source-dirs:
-        src-ghcjs
+      src-ghcjs
     js-sources:
-        src-ghcjs/Control/Monad/Xhr/Internal.js
+      src-ghcjs/Control/Monad/Xhr/Internal.js
     build-depends:
-        ghcjs-base
+      ghcjs-base
   else
     build-depends:
-        http-client
-      , http-conduit
-      , http-types
-      , wai
+      http-client,
+      http-conduit,
+      http-types,
+      wai
     other-modules:
-        Control.Monad.Xhr.Internal
+      Control.Monad.Xhr.Internal
     hs-source-dirs:
-        src-ghc
+      src-ghc
   default-language: Haskell2010
   default-extensions:
-      AllowAmbiguousTypes
-    , BlockArguments
-    , ConstraintKinds
-    , DeriveGeneric
-    , DerivingVia
-    , DuplicateRecordFields
-    , FunctionalDependencies
-    , FlexibleContexts
-    , FlexibleInstances
-    , GADTs
-    , GeneralizedNewtypeDeriving
-    , LambdaCase
-    , MultiParamTypeClasses
-    , NamedFieldPuns
-    , OverloadedStrings
-    , PolyKinds
-    , RankNTypes
-    , RecordWildCards
-    , ScopedTypeVariables
-    , TypeApplications
-    , TypeFamilies
-    , TypeOperators
-    , UndecidableInstances
+    AllowAmbiguousTypes,
+    BlockArguments,
+    ConstraintKinds,
+    DeriveGeneric,
+    DerivingVia,
+    DuplicateRecordFields,
+    FunctionalDependencies,
+    FlexibleContexts,
+    FlexibleInstances,
+    GADTs,
+    GeneralizedNewtypeDeriving,
+    LambdaCase,
+    MultiParamTypeClasses,
+    NamedFieldPuns,
+    OverloadedStrings,
+    PolyKinds,
+    RankNTypes,
+    RecordWildCards,
+    ScopedTypeVariables,
+    TypeApplications,
+    TypeFamilies,
+    TypeOperators,
+    UndecidableInstances

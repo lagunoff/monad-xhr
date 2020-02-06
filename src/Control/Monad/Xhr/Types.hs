@@ -1,3 +1,6 @@
+{-# LANGUAGE UnliftedFFITypes #-}
+{-# LANGUAGE GHCForeignImportPrim #-}
+{-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
@@ -20,7 +23,7 @@ import GHC.Word
 import Data.ByteString.Internal
 
 instance PToJSVal ByteString where
-  pToJSVal x = ((\(SomeBuffer x, _, _) -> x) $ fromByteString x)
+  pToJSVal x = ((\(SomeBuffer x, offset, length) -> slice_array x (pToJSVal offset) (pToJSVal  (offset + length))) $ fromByteString x)
 instance PFromJSVal ByteString where
   pFromJSVal = Buffer.toByteString 0 Nothing . Buffer.createFromArrayBuffer . unsafeCoerce
 #else
@@ -88,3 +91,13 @@ data XhrError
 
 instance ToJSVal ByteString where toJSVal = toJSVal_pure
 instance FromJSVal ByteString where fromJSVal = fromJSVal_pure
+
+#ifdef ghcjs_HOST_OS
+foreign import javascript unsafe
+  "(new Blob([$1.buf])).slice($2, $3)"
+  slice_array :: JSVal -> JSVal -> JSVal -> JSVal
+#else
+slice_array :: JSVal -> JSVal -> JSVal -> JSVal
+slice_array _ _ _ = undefined
+#endif
+
