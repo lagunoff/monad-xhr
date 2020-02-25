@@ -7,8 +7,10 @@ import Control.Monad.Xhr.Types
 import Data.Bifunctor
 import Data.String (fromString)
 import Data.Text as T
-import Data.ByteString as BS
+import Data.Aeson
+import Data.ByteString.Lazy as BSL
 import Data.Text.Encoding as T
+import Data.ByteString.Builder(toLazyByteString)
 import qualified Network.HTTP.Client as H
 import qualified Network.HTTP.Simple as H
 import qualified Network.HTTP.Types as H
@@ -43,3 +45,8 @@ interpXhrImpl xrq =
       prepareError (SomeException ex) = NetworkError $ T.pack (show ex)
       prepareRequestHeaders = fmap $ bimap (fromString . T.unpack)  (fromString . T.unpack)
       prepareResponseHeaders = fmap $ bimap (T.pack . show)  (T.pack . show)
+
+decodeBody :: FromJSON a => XhrResponseBody -> IO (Either String a)
+decodeBody = \case
+  XRSText txt         -> pure $ eitherDecode $ toLazyByteString (encodeUtf8Builder txt)
+  XRSByteString bytes -> pure $ eitherDecode (BSL.fromStrict bytes)

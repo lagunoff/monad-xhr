@@ -65,7 +65,3 @@ instance (Monad m) => MonadXhr (XhrT m) where
 
 instance (MonadTrans XhrT) where
   lift = XhrT . lift
-
--- instance (MonadError e m) => MonadError e (XhrT m) where
---   throwError = XhrT . const . throwError
---   catchError ma ema = XhrT \a -> catchError (runXhrT ma a) (($ a) . runXhrT . ema)
